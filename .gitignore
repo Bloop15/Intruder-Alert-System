@@ -13,3 +13,11 @@ config.py
 
 # Ignore system files
 .DS_Store
+.vscode
+
+# Ignore logs and CSV outputs
+Logs/*.csv
+*.log
+
+#Images and Videos Captured
+Capture/
