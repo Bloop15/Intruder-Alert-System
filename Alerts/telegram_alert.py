@@ -33,7 +33,7 @@ def send_telegram_video(bot_token, chat_id, video_path):
             )
         
         if response.status_code ==200:
-            return "Video sent successfully"
+            return "Video sent successfully!"
         else:
             return f"Failed to send video: {response.status_code}, {response.text}"
 
