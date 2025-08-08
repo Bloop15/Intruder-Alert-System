@@ -7,6 +7,13 @@ from config import BOT_TOKEN, CHAT_ID
 from Logs.log_handler import log_intrusion
 
 
+FPS= 20
+VIDEO_DURATION_SEC= 5
+
+def print_error(e, context=""):
+    print(f"[ERROR] {context}: {e}")
+    traceback.print_exc()
+
 
 def capture_intruder():
     
@@ -23,6 +30,7 @@ def capture_intruder():
     video_name= f"intruder_{timestamp}.mp4"
     video_path= os.path.join(video_dir, video_name)
 
+    cap= None
     try:
         cap= cv2.VideoCapture(0)
         if not cap.isOpened():
@@ -33,44 +41,35 @@ def capture_intruder():
             log_intrusion("No Image", "Failed to capture image!")
             raise RuntimeError("Image capture failed!")
 
-        try:
-            cv2.imwrite(image_path, frame)
-            print(f"Image saved to: {image_path}")
-
-        except Exception as e:
-            log_intrusion("No Image", f"Image save failed: {e}")
-            raise
+        cv2.imwrite(image_path, frame)
+        print(f"Image saved to: {image_path}")
 
         try:
             status= send_telegram_image(BOT_TOKEN, CHAT_ID, image_path)
             print(status)
             log_intrusion(os.path.basename(image_path), status)
-        
+
         except Exception as e:
             log_intrusion(os.path.basename(image_path), f"Image send Failed: {e}")
-            traceback.print_exc()
+            print_error(e, "Sending image to Telegram")
 
         try:
             fourcc= cv2.VideoWriter_fourcc(*"mp4v")
-            out= cv2.VideoWriter(video_path, fourcc, 20.0,
+            out= cv2.VideoWriter(video_path, fourcc, FPS,
                          (int(cap.get(3)), int(cap.get(4))))
-    
-            frame_count= 0
-            max_frames= 20*5
-
-            while(frame_count< max_frames):
+            
+            for _ in range(FPS*VIDEO_DURATION_SEC):
                 ret, frame= cap.read()
                 if not ret:
                     break
                 out.write(frame)
-                frame_count+= 1
-
             out.release()
+
             print(f"Video saved: {video_path}")
 
         except Exception as e:
             log_intrusion(video_name, f"Video capture failed: {e}")
-            traceback.print_exc()
+            print_error(e, "Capturing video")
 
 
         try:
@@ -80,13 +79,14 @@ def capture_intruder():
     
         except Exception as e:
             log_intrusion(video_name, f"Video Send Failed: {e}")
-            traceback.print_exc()
-
-        cap.release()
+            print_error(e, "Sending video to Telegram")
 
     except Exception as e:
-        print(f"Critical error: {e}")
-        traceback.print_exc()
+        print_error(e, "Critical error in capture_intruder")
+
+    finally:
+        if cap is not None:
+            cap.release()
 
 
 if __name__ == "__main__":
