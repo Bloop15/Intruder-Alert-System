@@ -6,6 +6,8 @@ from Alerts.telegram_alert import send_telegram_image, send_telegram_video
 from config import BOT_TOKEN, CHAT_ID
 from Logs.log_handler import log_intrusion
 
+FACE_CASCADE__PATH= cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+face_cascade= cv2.CascadeClassifier(FACE_CASCADE__PATH)
 
 FPS= 20
 VIDEO_DURATION_SEC= 5
@@ -40,6 +42,23 @@ def capture_intruder():
         if not ret:
             log_intrusion("No Image", "Failed to capture image!")
             raise RuntimeError("Image capture failed!")
+        
+        gray= cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces= face_cascade.detectMultiScale(
+            gray,
+            scaleFactor=1.1,
+            minNeighbors=5,
+            minSize=(30,30)
+        )
+
+        if len(faces)==0:
+            log_intrusion("No Face", "No face detected in the frame")
+            print("No face detected in the captured image")
+        else:
+            print(f"Detected {len(faces)} face(s).")
+
+        for(x,y,w,h) in faces:
+            cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 2)
 
         cv2.imwrite(image_path, frame)
         print(f"Image saved to: {image_path}")
@@ -62,6 +81,17 @@ def capture_intruder():
                 ret, frame= cap.read()
                 if not ret:
                     break
+
+                gray= cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                faces= face_cascade.detectMultiScale(
+                    gray,
+                    scaleFactor=1.3,
+                    minNeighbors=5
+                )
+
+                for(x,y,w,h) in faces:
+                    cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 2)
+                
                 out.write(frame)
             out.release()
 
