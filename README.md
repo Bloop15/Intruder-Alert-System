@@ -15,6 +15,7 @@ A Python-based security system that uses the webcam to capture intruder photos a
 ---
 
 ## Requirements
+
 Install dependencies with:
 ``` bash
 pip install -r requirements.txt 
@@ -22,10 +23,12 @@ pip install -r requirements.txt
 ---
 
 ## Setup
+
  Add your **Telegram Bot Token** and **Chat ID** inside `config.py`:
+ ```bash
    BOT_TOKEN = "your_bot_token_here"
    CHAT_ID = "your_chat_id_here"
-
+```
 ---
 
 ## Project Structure
