@@ -1,23 +1,32 @@
-# Ignore Python cache files
+# Python cache and compiled files
 __pycache__/
 */__pycache__/
-
-# Ignore compiled Python files
 *.py[cod]
 
-# Ignore virtual environment
+# Virtual environment
 venv/
 
-# Ignore sensitive config
+# Sensitive config
 config.py
 
-# Ignore system files
+# System/Editor files
 .DS_Store
-.vscode
+.vscode/
+*.swp
+*.swo
 
-# Ignore logs and CSV outputs
+# Logs and CSV outputs
 Logs/*.csv
 *.log
 
 #Images and Videos Captured
 Capture/
+Dataset/
+
+# Model files 
+*.yml
+*.pkl
+*.h5
+
+# Jupyter/IPython checkpoints
+.ipynb_checkpoints/
