@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ---
 
 ## Project Structure
-
+```bash
 Intruder-Alert/
 │-- Alerts/              # Handles sending alerts (Telegram)
 │-- Capture/             # Webcam photo & video capture
@@ -40,7 +40,7 @@ Intruder-Alert/
 │-- config.py            # Stores bot token & chat ID
 │-- main.py              # Main program entry
 │-- requirements.txt     # Dependencies
-
+```
 ---
 
 ## Usage
