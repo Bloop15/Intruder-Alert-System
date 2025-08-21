@@ -34,12 +34,16 @@ pip install -r requirements.txt
 ## Project Structure
 ```bash
 Intruder-Alert/
-│-- Alerts/              # Handles sending alerts (Telegram)
-│-- Capture/             # Webcam photo & video capture
-│-- Logs/                # Intrusion logs storage
-│-- config.py            # Stores bot token & chat ID
-│-- main.py              # Main program entry
-│-- requirements.txt     # Dependencies
+|-- Alerts/              # Sends alerts via Telegram
+|-- Capture/             # Captures photos & videos via webcam
+|-- Logs/                # Stores intrusion logs
+|-- Dataset/             # Face recognition dataset
+|-- config.py            # Bot token, chat ID, paths
+|-- main.py              # Main program
+|-- trainer.py           # Model training
+|-- cleanup.py           # Remove old files
+|--cleanup_dataset.py    # Dataset cleanup
+|-- requirements.txt     # Dependencies
 ```
 ---
 
