@@ -1,20 +1,24 @@
-# Intruder Alert System 🔐
+# Intruder Alert System 🔒
 
-A Python-based security system that uses the webcam to capture intruder photos and videos when unauthorized access is detected(eg., on screen unlocks).
+A Python-based security system that uses the webcam to capture intruder photos and videos when unauthorized access is detected (e.g., on screen unlocks).
+
+---
 
 ## Features
-- Captures photo and video via webcam
-- Sends image to a Telegram bot
-- Logs timestamps of intrusion events
-- Modular design with separate logging, capture, and alert components
-- Includes face detection for better accuracy
+
+- Captures photo and video via webcam  
+- Sends image to a Telegram bot  
+- Logs timestamps of intrusion events  
+- Modular design with separate logging, capture, and alert components  
+- Includes face detection for better accuracy  
+
+---
 
 ## Requirements
 Install dependencies with:
-
-```bash
-pip install -r requirements.txt
-
+``` bash
+pip install -r requirements.txt 
+```
 ---
 
 ## Setup
@@ -37,9 +41,11 @@ Intruder-Alert/
 ---
 
 ## Usage
-Run the program:
-   python main.py
 
+Run the program:
+```bash
+   python main.py
+```
 When an intruder is detected:
 - A photo/video is captured  
 - Image/video is sent to your Telegram bot  
